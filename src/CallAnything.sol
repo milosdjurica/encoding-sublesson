@@ -21,13 +21,50 @@ contract CallAnything {
         return abi.encodeWithSelector(getSelectorOne(), someAddress, amount);
     }
 
-    function callTransferFunctionWithBinary(
+    function callTransferFunctionWithBinary1(
+        address someAddress,
+        uint amount
+    ) public returns (bytes4, bool) {
+        (bool success, bytes memory returnData) = address(this).call(
+            getDataToCallTransfer(someAddress, amount)
+            // abi.encodeWithSelector(getSelectorOne(), someAddress, amount)
+            // abi.encodeWithSignature(
+            //     "transfer(address,uint)",
+            //     someAddress,
+            //     amount
+            // )
+        );
+        return (bytes4(returnData), success);
+    }
+
+    function callTransferFunctionWithBinary2(
         address someAddress,
         uint amount
     ) public returns (bytes4, bool) {
         (bool success, bytes memory returnData) = address(this).call(
             // getDataToCallTransfer(someAddress, amount)
             abi.encodeWithSelector(getSelectorOne(), someAddress, amount)
+            // abi.encodeWithSignature(
+            //     "transfer(address,uint)",
+            //     someAddress,
+            //     amount
+            // )
+        );
+        return (bytes4(returnData), success);
+    }
+
+    function callTransferFunctionWithBinary3(
+        address someAddress,
+        uint amount
+    ) public returns (bytes4, bool) {
+        (bool success, bytes memory returnData) = address(this).call(
+            // getDataToCallTransfer(someAddress, amount)
+            // abi.encodeWithSelector(getSelectorOne(), someAddress, amount)
+            abi.encodeWithSignature(
+                "transfer(address,uint)",
+                someAddress,
+                amount
+            )
         );
         return (bytes4(returnData), success);
     }
